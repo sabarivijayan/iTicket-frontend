@@ -1,0 +1,102 @@
+/* MovieCard.module.css */
+.movieCard {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    background-color: #FF4C24; /* Sets the background color of the card */
+    color: white; /* Sets the text color to white */
+    border-radius: 10px; /* Adds rounded corners to the card */
+    padding: 10px; /* Adds padding inside the card */
+    margin-bottom: 20px; /* Adds a 20px gap between cards vertically */
+    height: 575px; /* Fixed height for consistent card size */
+    display: flex; /* Uses flexbox to align content */
+    flex-direction: column; /* Arranges children in a column */
+    overflow: hidden; /* Hides overflowed content */
+    font-family: 'Outfit', sans-serif;
+}
+
+.movieCard:hover {
+    transform: scale(1.05);
+}
+
+.movieImageContainer {
+    width: 100%;
+    height: 60%; /* Adjust height for the image container */
+    overflow: hidden;
+    display: flex; /* Use flexbox to center the image */
+    align-items: center;
+    justify-content: center;
+}
+
+.movieImage {
+    width: 100%;
+    height: auto; /* Maintain aspect ratio */
+    object-fit: contain; /* Ensure the image fits within the container without cropping */
+}
+
+.movieInfo {
+    padding: 10px;
+    text-align: center;
+    flex: 1; /* Allows the info section to take available space */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distributes space between items */
+}
+
+.movieTitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.movieGenre, .movieRating {
+    margin-top: 5px;
+    font-size: 0.9rem;
+}
+
+.movieShowtimes {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap; /* Allows showtimes to wrap */
+    gap: 5px; /* Adds space between items */
+}
+
+.movieShowtimes span {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #f0f0f0; /* Adjust this color if needed */
+    border-radius: 5px;
+    font-size: 0.8rem;
+    color: orange; /* Sets text color to orange to match the card background */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .movieCard {
+        height: auto; /* Allow height to adjust based on content */
+        margin-bottom: 15px; /* Reduce the gap between cards */
+    }
+}
+
+@media (max-width: 480px) {
+    .movieCard {
+        height: auto; /* Allow height to adjust based on content */
+        margin-bottom: 10px; /* Further reduce the gap between cards */
+        padding: 5px; /* Reduce padding for smaller screens */
+    }
+
+    .movieImageContainer {
+        height: 50%; /* Adjust image container height for small screens */
+    }
+
+    .movieTitle {
+        font-size: 1rem; /* Adjust font size */
+    }
+
+    .movieGenre, .movieRating {
+        font-size: 0.8rem; /* Adjust font size */
+    }
+
+    .movieShowtimes span {
+        font-size: 0.7rem; /* Adjust font size */
+        padding: 4px 8px; /* Adjust padding */
+    }
+}

@@ -1,0 +1,82 @@
+.sliderContainer {
+    width: 95%;
+    height: 50vw;
+    margin: 30px auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    font-family: 'Outfit', sans-serif;
+  }
+  
+  .swiper {
+    height: 100%;
+  }
+  
+  .sliderItem {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+    position: relative;
+  }
+  
+  .sliderContents {
+    position: absolute;
+    bottom: 10%;
+    left: 5%;
+    color: white;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 50%;
+  }
+  
+  .sliderContents h2 {
+    font-size: 3vw;
+    font-weight: 600;
+  }
+  
+  .sliderContents button {
+    background-color: white;
+    color: #333;
+    padding: 10px 20px;
+    font-size: 1.2vw;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: 'Outfit', sans-serif;
+  }
+  
+  .sliderContents button:hover {
+    background-color: #ff4c24;
+    color: white;
+  }
+  
+  @media (max-width: 1050px) {
+    .sliderContents h2 {
+      font-size: 4vw;
+    }
+  
+    .sliderContents button {
+      font-size: 1.5vw;
+      padding: 8px 16px;
+    }
+  }
+  
+  @media (max-width: 750px) {
+    .sliderContents {
+      max-width: 70%;
+    }
+  
+    .sliderContents h2 {
+      font-size: 6vw;
+    }
+  
+    .sliderContents button {
+      font-size: 2vw;
+    }
+  }
+  

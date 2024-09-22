@@ -1,0 +1,203 @@
+/* Navbar styling */
+.navbar {
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1000;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Center the search bar in the middle of the page */
+.searchbox {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Increase the width of the input box */
+.searcharea {
+    padding: 10px;
+    width: 300px;
+    border-radius: 20px;
+    border: 2px solid orange;
+    outline: none;
+    text-align: center;
+    transition: border-color 0.3s ease;
+}
+
+/* Input hover/focus effect */
+.searcharea:focus {
+    border-color: #ff6600;
+}
+
+/* Adjust dropdown to match the search bar width */
+.suggestionsDropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 300px;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* Individual suggestion item */
+.suggestionItem {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.suggestionItem:hover {
+    background-color: #f0f0f0;
+}
+
+/* Suggestion content: movie title and image */
+.suggestionContent {
+    display: flex;
+    align-items: center;
+}
+
+.suggestionContent span {
+    margin-right: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+.suggestionImage {
+    border-radius: 5px;
+}
+
+/* Signup button styling */
+.signupButton {
+    background: transparent;
+    font-size: 16px;
+    color: #49557E;
+    border: 1px solid #FF4C24;
+    padding: 10px 30px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.signupButton:hover {
+    background: #fff4f2;
+}
+
+/* User section and dropdown */
+.userSection {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.userIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profilePic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Dropdown menu */
+.dropdownMenu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    z-index: 1000;
+    width: 150px;
+}
+
+.logoutButton {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: transparent;
+    color: #ff4c24;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.3s ease;
+}
+
+.logoutButton:hover {
+    background-color: #fff4f2;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1050px) {
+    .navbarRight {
+        gap: 30px;
+    }
+
+    .searcharea {
+        width: 280px;
+    }
+}
+
+@media (max-width: 900px) {
+    .searcharea {
+        width: 260px;
+    }
+
+    .suggestionsDropdown {
+        width: 260px;
+    }
+}
+
+@media (max-width: 750px) {
+    .searcharea {
+        width: 240px;
+    }
+
+    .suggestionsDropdown {
+        width: 240px;
+    }
+}
+
+@media (max-width: 600px) {
+    .searcharea {
+        width: 220px;
+    }
+
+    .suggestionsDropdown {
+        width: 220px;
+    }
+
+    .signupButton {
+        padding: 8px 20px;
+        font-size: 14px;
+    }
+
+    .userIcon {
+        width: 35px;
+        height: 35px;
+    }
+
+    .dropdownMenu {
+        width: 130px;
+    }
+}

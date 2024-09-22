@@ -1,0 +1,240 @@
+.movieDetailsPage {
+  position: relative;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  min-height: 100vh;
+  font-family: 'Outfit', sans-serif;
+}
+
+.backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.7;
+  background-size: cover;
+  background-position: center;
+  filter: blur(5px);
+}
+
+.backdropImg {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.movieInfoContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+
+.poster {
+  margin-right: 40px;
+}
+
+.posterImg {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.details {
+  max-width: 600px;
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.description {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+.rating,
+.genre,
+.duration {
+  margin-top: 10px;
+  font-size: 1.2rem;
+}
+
+.showtimeInfo {
+  margin-top: 40px;
+  width: 100%;
+  text-align: center;
+}
+
+.dates {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.dateButton {
+  background-color: #444;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.dateButton.active {
+  background-color: #ff4500;
+}
+
+.theatreSection {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.showtimes {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.showtimeButton {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.showtimeButton:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.theatreEntry {
+  margin-top: 20px;
+}
+
+/* Seat Booking Modal */
+/* Ensure the modal overlay covers the entire screen */
+.seatModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+  z-index: 1000; /* Ensure overlay is on top */
+}
+
+/* Adjust the modal itself */
+.seatModal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1001; /* Ensure modal is above the overlay */
+  width: 80%;
+  max-width: 600px;
+}
+
+/* Modal header styling */
+.seatModalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.seatModalTitle {
+  font-size: 1.5rem;
+  color: #ff4500;
+}
+
+.seatModalClose {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: white;
+  cursor: pointer;
+}
+
+/* Seat grid inside the modal */
+.seatGrid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Seat button styling */
+.seat {
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.seat.selected {
+  background-color: #ff4c24;
+  color: #fff;
+}
+
+.seat.disabled {
+  background-color: #666;
+  cursor: not-allowed;
+}
+
+.seatRowLabel {
+  grid-column: span 10;
+  text-align: left;
+  color: #fff;
+}
+
+/* Continue and cancel button styles */
+.continueButton {
+  background-color: #ff4500;
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+}
+
+.continueButton:hover {
+  background-color: #e03d00;
+}
+
+.cancelButton {
+  background-color: #666;
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+.cancelButton:hover {
+  background-color: #555;
+}

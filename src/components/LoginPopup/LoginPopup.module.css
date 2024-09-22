@@ -1,0 +1,157 @@
+/* Container for the popup */
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+/* Content of the popup */
+.popupContainer {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Close button */
+.closeButton {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Heading */
+.popupHeading {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #333;
+  text-align: center;
+}
+
+/* Form elements */
+.popupInput {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.popupInput:focus {
+  border-color: #0070f3;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 112, 255, 0.2);
+}
+
+/* Submit button */
+.popupSubmitButton {
+  width: 100%;
+  padding: 0.75rem;
+  background: #0070f3;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 1rem;
+}
+
+.popupSubmitButton:hover {
+  background: #005bb5;
+}
+
+.popupSubmitButton:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Toggle login/register text */
+.popupToggleText {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  text-align: center;
+  color: #555;
+}
+
+.popupToggleLink {
+  color: #0070f3;
+  cursor: pointer;
+}
+
+.popupToggleLink:hover {
+  text-decoration: underline;
+}
+
+/* Google login button styling */
+.popupGoogleButton {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.googleButton {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #4285f4;
+  border-radius: 4px;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.googleButton:hover {
+  background-color: #357ae8;
+}
+
+.googleButton img {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .popupContainer {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+
+  .popupHeading {
+    font-size: 1.5rem;
+  }
+
+  .popupInput,
+  .popupSubmitButton {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+
+  .popupSubmitButton {
+    margin-top: 0.75rem;
+  }
+}

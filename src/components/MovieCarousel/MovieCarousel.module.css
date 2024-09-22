@@ -1,0 +1,200 @@
+.carouselContainer {
+    width: 100%;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+    font-family: 'Outfit', sans-serif;
+}
+
+.carouselHeading {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.carousel {
+    display: flex;
+    flex-wrap: nowrap; /* Ensures carousel items stay in a single row */
+    gap: 20px; /* Space between carousel items */
+}
+
+.carouselSlide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.carouselSlide:hover {
+    transform: translateY(-10px);
+    cursor: pointer;
+}
+
+.imageContainer {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Ensures consistent card size */
+    overflow: hidden;
+    border-bottom: 2px solid #ddd;
+}
+
+.carouselImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the container */
+}
+
+.movieInfo {
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+.movieTitle {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin: 10px 0;
+}
+
+.movieGenre {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.movieRating {
+    font-size: 16px;
+    color: #ff9800;
+    margin-bottom: 10px;
+}
+
+.showtimesContainer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.showtime {
+    background-color: #f1f1f1;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: #333;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Filter Container */
+.filterContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Space between filter items */
+    margin-bottom: 20px; /* Space below filters */
+    justify-content: center; /* Center align filters */
+}
+
+/* Filter Input */
+.filterInput {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 200px; /* Fixed width for consistency */
+}
+
+/* Filter Input Focus State */
+.filterInput:focus {
+    border-color: #007bff; /* Highlight border color on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add shadow on focus */
+    outline: none; /* Remove default outline */
+}
+
+/* Filter Label */
+.filterLabel {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px; /* Space between label and input */
+}
+
+/* Filter Button */
+.filterButton {
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff; /* Primary button color */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Filter Button Hover State */
+.filterButton:hover {
+    background-color: #0056b3; /* Darker button color on hover */
+}
+
+
+@media screen and (max-width: 768px) {
+    .carouselContainer {
+        padding: 10px; /* Reduced padding for smaller screens */
+    }
+
+    .imageContainer {
+        height: 250px; /* Adjust height for smaller screens */
+    }
+
+    .carousel {
+        gap: 15px; /* Reduced gap between carousel items */
+    }
+
+    .carouselSlide {
+        width: calc(100% / 2.5); /* Display fewer cards on smaller screens */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .carouselContainer {
+        padding: 5px; /* Further reduced padding for mobile */
+    }
+
+    .carouselHeading {
+        font-size: 20px; /* Adjust font size for smaller screens */
+    }
+
+    .imageContainer {
+        height: 200px; /* Smaller height for mobile screens */
+    }
+
+    .carouselSlide {
+        width: calc(100% / 1.5); /* Display one card and part of another */
+    }
+
+    .movieTitle {
+        font-size: 16px; /* Smaller title for mobile */
+    }
+
+    .movieGenre, .movieRating {
+        font-size: 12px; /* Smaller genre and rating text for mobile */
+    }
+}
