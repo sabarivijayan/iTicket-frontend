@@ -53,25 +53,39 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
     null
   );
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [bookedSeats, setBookedSeats] = useState<string[]>([]); // State for booked seats
+  const [bookedSeats, setBookedSeats] = useState<string[]>([]);
 
   const router = useRouter();
   const searchParams = useSearchParams();
   const backendUrl = "http://localhost:4000";
-
   const SEAT_PRICE = 150;
   const SEAT_LIMIT = 10;
 
+  const token = sessionStorage.getItem("token"); // Retrieve token from localStorage
+
   useEffect(() => {
     const fetchShowDetails = async () => {
+      if (!token) {
+        toast.error("Please log in to proceed with booking.");
+        router.push("/signup");
+        return;
+      }
+
       try {
         const response = await axios.get<{ success: boolean; data: Show[] }>(
-          `${backendUrl}/api/show/list`
+          `${backendUrl}/api/show/list`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
+
         if (response.data.success) {
           const selectedShow = response.data.data.find(
             (show) => show._id === params.id
           );
+
           if (selectedShow) {
             setShow(selectedShow);
 
@@ -91,15 +105,20 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
 
             setSelectedDate(date || selectedShow.dates[0]);
 
-            // Fetch booked seats for this show
             const bookingResponse = await axios.get(
-              `${backendUrl}/api/bookings?showId=${params.id}&theatreId=${theatreId}&date=${date}&showtimeId=${showtimeId}`
+              `${backendUrl}/api/bookings?showId=${params.id}&theatreId=${theatreId}&date=${date}&showtimeId=${showtimeId}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
             );
+
             setBookedSeats(
               bookingResponse.data.data.flatMap(
                 (booking: any) => booking.bookedSeats
               )
-            ); // Extract booked seats
+            );
           } else {
             toast.error("Show not found.");
             router.push("/404");
@@ -114,7 +133,7 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
     };
 
     fetchShowDetails();
-  }, [params.id, router, searchParams]);
+  }, [params.id, router, searchParams, token]);
 
   useEffect(() => {
     const loadRazorpayScript = () => {
@@ -127,9 +146,7 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
   }, []);
 
   const handleSeatClick = (seatNumber: string) => {
-    if (bookedSeats.includes(seatNumber)) {
-      return; // Prevent selecting booked seats
-    }
+    if (bookedSeats.includes(seatNumber)) return;
 
     setSelectedSeats((prevSelectedSeats) =>
       prevSelectedSeats.includes(seatNumber)
@@ -139,6 +156,12 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
   };
 
   const handlePayment = async () => {
+    if (!token) {
+      toast.error("Please log in to proceed with booking.");
+      router.push("/signup");
+      return;
+    }
+
     if (selectedSeats.length === 0) {
       toast.error("Please select at least one seat.");
       return;
@@ -150,6 +173,8 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
     }
 
     try {
+      const userId = localStorage.getItem("userId");
+
       const bookingData = {
         movieName: show?.movie.title,
         theatreName: selectedTheatre?.name,
@@ -157,12 +182,17 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
         date: selectedDate,
         bookedSeats: selectedSeats,
         totalPrice,
-        userId: "userId",
+        userId,
       };
 
       const { data } = await axios.post(
         `${backendUrl}/api/booking/place`,
-        bookingData
+        bookingData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       const options = {
@@ -201,12 +231,17 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
 
       const { data } = await axios.post(
         `${backendUrl}/api/booking/payment-success`,
-        paymentData
+        paymentData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       if (data.success) {
         toast.success("Payment successful. Booking confirmed.");
-        router.push("/"); // Redirect after payment success
+        router.push("/");
       }
     } catch (error) {
       console.error("Error confirming payment:", error);
@@ -217,7 +252,7 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
 
   const handlePaymentFailure = () => {
     toast.error("Payment failed. Please try again.");
-    router.push("/"); // Redirect to home page on failure
+    router.push("/");
   };
 
   const totalPrice = selectedSeats.length * SEAT_PRICE;
@@ -259,7 +294,7 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
                       ? styles.seatSelected
                       : ""
                   } ${isBooked ? styles.seatBooked : ""}`}
-                  onClick={() => !isBooked && handleSeatClick(seatNumber)} // Prevent clicking on booked seats
+                  onClick={() => !isBooked && handleSeatClick(seatNumber)}
                 >
                   {seatNumber}
                 </div>

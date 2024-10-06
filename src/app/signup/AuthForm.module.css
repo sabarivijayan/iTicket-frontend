@@ -1,0 +1,147 @@
+.dialog {
+    width: 500px;
+    margin: auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .closeBtnContainer {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .closeBtn {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .heading {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .passwordContainer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 15px;
+  }
+  
+  .showPasswordBtn {
+    margin-left: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .submitBtn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .switchModeBtn {
+    background-color: transparent;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
+  .text {
+    margin-top: 20px;
+    font-size: 14px;
+  }
+  
+  .orText {
+    font-size: 15px;
+    font-weight: 100;
+    margin-top: 20px;
+  }
+  
+  .signInWithText {
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 10px;
+  }
+  
+  .otpContainer {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .submitBtn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .submitBtn:hover {
+    background-color: #0056b3;
+  }
+  
+  @media (max-width: 600px) {
+    .dialog {
+      width: 100%;
+      padding: 10px;
+      box-shadow: none;
+    }
+  
+    .formContainer {
+      padding: 10px;
+    }
+  
+    .input {
+      width: 100%;
+      font-size: 14px;
+    }
+  
+    .submitBtn {
+      font-size: 14px;
+    }
+  
+    .switchModeBtn {
+      font-size: 12px;
+    }
+  
+    .orText,
+    .signInWithText {
+      font-size: 12px;
+    }
+  }
+  
