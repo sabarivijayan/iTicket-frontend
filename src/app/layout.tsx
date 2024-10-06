@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
-import { GoogleOAuthProvider } from "@react-oauth/google"; // Import GoogleOAuthProvider
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -20,13 +20,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string;
+
   return (
     <html lang="en">
       <body className={outfit.variable}>
-        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string}>
-          <Navbar />
-          {children}
-        </GoogleOAuthProvider>
+        {googleClientId ? (
+          <GoogleOAuthProvider clientId={googleClientId}>
+            <Navbar />
+            {children}
+          </GoogleOAuthProvider>
+        ) : (
+          <div>Google Client ID is not set. Please check your environment variables.</div>
+        )}
       </body>
     </html>
   );

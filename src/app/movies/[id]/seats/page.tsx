@@ -49,9 +49,11 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
   const [show, setShow] = useState<Show | null>(null);
   const [selectedTheatre, setSelectedTheatre] = useState<Theatre | null>(null);
   const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
-  const [selectedShowtime, setSelectedShowtime] = useState<Showtime | null>(null);
+  const [selectedShowtime, setSelectedShowtime] = useState<Showtime | null>(
+    null
+  );
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [bookedSeats, setBookedSeats] = useState<string[]>([]);  // State for booked seats
+  const [bookedSeats, setBookedSeats] = useState<string[]>([]); // State for booked seats
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -90,8 +92,14 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
             setSelectedDate(date || selectedShow.dates[0]);
 
             // Fetch booked seats for this show
-            const bookingResponse = await axios.get(`${backendUrl}/api/bookings?showId=${params.id}&theatreId=${theatreId}&date=${date}&showtimeId=${showtimeId}`);
-            setBookedSeats(bookingResponse.data.data.flatMap((booking: any) => booking.bookedSeats));  // Extract booked seats
+            const bookingResponse = await axios.get(
+              `${backendUrl}/api/bookings?showId=${params.id}&theatreId=${theatreId}&date=${date}&showtimeId=${showtimeId}`
+            );
+            setBookedSeats(
+              bookingResponse.data.data.flatMap(
+                (booking: any) => booking.bookedSeats
+              )
+            ); // Extract booked seats
           } else {
             toast.error("Show not found.");
             router.push("/404");
@@ -120,7 +128,7 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
 
   const handleSeatClick = (seatNumber: string) => {
     if (bookedSeats.includes(seatNumber)) {
-      return;  // Prevent selecting booked seats
+      return; // Prevent selecting booked seats
     }
 
     setSelectedSeats((prevSelectedSeats) =>
@@ -152,7 +160,10 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
         userId: "userId",
       };
 
-      const { data } = await axios.post(`${backendUrl}/api/booking/place`, bookingData);
+      const { data } = await axios.post(
+        `${backendUrl}/api/booking/place`,
+        bookingData
+      );
 
       const options = {
         key: data.key,
@@ -188,11 +199,14 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
         razorpay_order_id: response.razorpay_order_id,
       };
 
-      const { data } = await axios.post(`${backendUrl}/api/booking/payment-success`, paymentData);
+      const { data } = await axios.post(
+        `${backendUrl}/api/booking/payment-success`,
+        paymentData
+      );
 
       if (data.success) {
         toast.success("Payment successful. Booking confirmed.");
-        router.push("/");  // Redirect after payment success
+        router.push("/"); // Redirect after payment success
       }
     } catch (error) {
       console.error("Error confirming payment:", error);
@@ -203,7 +217,7 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
 
   const handlePaymentFailure = () => {
     toast.error("Payment failed. Please try again.");
-    router.push("/");  // Redirect to home page on failure
+    router.push("/"); // Redirect to home page on failure
   };
 
   const totalPrice = selectedSeats.length * SEAT_PRICE;
@@ -221,7 +235,8 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
         Select Your Seats for {show.movie.title}
       </h1>
       <p className={styles.descriptionText}>
-        Theatre: {selectedTheatre.name}, Location: {selectedTheatre.location}, Capacity: {selectedTheatre.capacity}
+        Theatre: {selectedTheatre.name}, Location: {selectedTheatre.location},
+        Capacity: {selectedTheatre.capacity}
       </p>
       <div className={styles.descriptionText}>
         Showtime: {selectedShowtime.time}
@@ -239,8 +254,12 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
               return (
                 <div
                   key={seatNumber}
-                  className={`${styles.seat} ${selectedSeats.includes(seatNumber) ? styles.seatSelected : ""} ${isBooked ? styles.seatBooked : ""}`}
-                  onClick={() => !isBooked && handleSeatClick(seatNumber)}  // Prevent clicking on booked seats
+                  className={`${styles.seat} ${
+                    selectedSeats.includes(seatNumber)
+                      ? styles.seatSelected
+                      : ""
+                  } ${isBooked ? styles.seatBooked : ""}`}
+                  onClick={() => !isBooked && handleSeatClick(seatNumber)} // Prevent clicking on booked seats
                 >
                   {seatNumber}
                 </div>

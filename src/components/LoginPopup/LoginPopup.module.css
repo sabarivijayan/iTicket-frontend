@@ -1,5 +1,5 @@
 /* Container for the popup */
-.popupOverlay {
+.loginPopupOverlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -13,7 +13,7 @@
 }
 
 /* Content of the popup */
-.popupContainer {
+.loginPopupContainer {
   background: #fff;
   padding: 2rem;
   border-radius: 8px;
@@ -27,7 +27,7 @@
 }
 
 /* Close button */
-.closeButton {
+.loginCloseButton {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
@@ -39,77 +39,21 @@
 }
 
 /* Heading */
-.popupHeading {
+.loginPopupHeading {
   margin-bottom: 1.5rem;
   font-size: 1.8rem;
   color: #333;
   text-align: center;
 }
 
-/* Form elements */
-.popupInput {
-  width: 100%;
-  padding: 0.75rem;
+/* Error message */
+.loginErrorMessage {
+  color: red;
   margin-bottom: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-  color: #333;
-}
-
-.popupInput:focus {
-  border-color: #0070f3;
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(0, 112, 255, 0.2);
-}
-
-/* Submit button */
-.popupSubmitButton {
-  width: 100%;
-  padding: 0.75rem;
-  background: #0070f3;
-  border: none;
-  color: #fff;
-  font-size: 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  margin-top: 1rem;
-}
-
-.popupSubmitButton:hover {
-  background: #005bb5;
-}
-
-.popupSubmitButton:disabled {
-  background: #ccc;
-  cursor: not-allowed;
-}
-
-/* Toggle login/register text */
-.popupToggleText {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  text-align: center;
-  color: #555;
-}
-
-.popupToggleLink {
-  color: #0070f3;
-  cursor: pointer;
-}
-
-.popupToggleLink:hover {
-  text-decoration: underline;
 }
 
 /* Google login button styling */
-.popupGoogleButton {
-  width: 100%;
-  margin-top: 1rem;
-}
-
-.googleButton {
+.loginGoogleButton {
   width: 100%;
   padding: 0.75rem;
   background-color: #4285f4;
@@ -125,33 +69,52 @@
   justify-content: center;
 }
 
-.googleButton:hover {
+.loginGoogleButton:hover {
   background-color: #357ae8;
 }
 
-.googleButton img {
-  width: 20px;
-  height: 20px;
-  margin-right: 0.5rem;
+/* Input fields */
+.loginInput, .signupInput, .otpInput {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
 }
 
-@media (max-width: 600px) {
-  .popupContainer {
-    padding: 1.5rem;
-    max-width: 90%;
-  }
+/* Buttons */
+.loginButton, .signupButton, .otpButton {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
 
-  .popupHeading {
-    font-size: 1.5rem;
-  }
+.loginButton:hover, .signupButton:hover, .otpButton:hover {
+  background-color: #005bb5;
+}
 
-  .popupInput,
-  .popupSubmitButton {
-    font-size: 0.9rem;
-    padding: 0.6rem;
-  }
+/* Text and links */
+.loginText, .signupText, .otpText {
+  text-align: center;
+  margin-top: 1rem;
+}
 
-  .popupSubmitButton {
-    margin-top: 0.75rem;
-  }
+.loginLink, .signupLink, .otpLink {
+  cursor: pointer;
+  color: #0070f3;
+  text-decoration: underline;
+}
+
+/* OTP Verification message */
+.otpSuccessMessage {
+  color: green;
+  text-align: center;
+  margin-bottom: 1rem;
 }
