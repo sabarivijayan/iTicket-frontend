@@ -16,6 +16,7 @@ interface CredentialResponse {
 }
 interface GoogleCredential {
     email: string;
+    sub: string;
     // Add other fields you may need, like name, picture, etc.
   }
 interface DecodedToken {
@@ -76,26 +77,20 @@ const AuthForm: React.FC<AuthFormProps> = ({ onSubmit, isAdmin }) => {
         // Decode the Google credential (JWT) to extract the email
         const decoded: GoogleCredential = jwtDecode(credential);
         const userEmail = decoded.email;
+        const userId = decoded.sub;
   
         if (userEmail) {
           const response = await googleSignIn(credential); // Pass the credential (JWT token)
           if(response?.token){
-
-            const userInfo = await axios.get(
-                `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${credential}`
-              );
-    
-            const { picture } = userInfo.data; // Capture the profile picture URL
-
             sessionStorage.setItem("googleEmail", userEmail);
+            sessionStorage.setItem("userId", userId);
             sessionStorage.setItem("token", response.token); // Store the token for future logins
-            sessionStorage.setItem("googleProfilePic", picture);
-            
             router.push("/"); // Redirect to home after successful login
           }
           else if (response) {
             setOtpDialogOpen(true);
             sessionStorage.setItem("googleEmail", userEmail); // Store the email, not the token
+            sessionStorage.setItem("userId", userId);
           } else {
             Swal.fire({
               icon: "error",

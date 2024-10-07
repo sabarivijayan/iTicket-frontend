@@ -58,10 +58,44 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const backendUrl = "http://localhost:4000";
-  const SEAT_PRICE = 150;
   const SEAT_LIMIT = 10;
 
-  const token = sessionStorage.getItem("token"); // Retrieve token from localStorage
+  const token = sessionStorage.getItem("token");
+
+  // Price per seat based on tier
+  const seatPriceByTier = (rowIndex: number, totalRows: number) => {
+    const tierSize = totalRows / 4; // Divide into 4 tiers
+    if (rowIndex < tierSize) return 110;
+    if (rowIndex < tierSize * 2) return 150;
+    if (rowIndex < tierSize * 3) return 180;
+    return 210;
+  };
+
+  const fetchBookedSeats = async (
+    movieName: string,
+    theatreName: string,
+    date: string,
+    showtime: string
+  ) => {
+    try {
+      const response = await axios.get(`${backendUrl}/api/booking/list`, {
+        params: {
+          movieName,
+          theatreName,
+          date: new Date(date).toISOString(), // Format the date properly
+          showtime,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const seats = response.data.data.flatMap((booking: any) => booking.bookedSeats);
+      setBookedSeats(seats); // Update the bookedSeats state
+    } catch (error) {
+      console.error("Error fetching booked seats:", error);
+      toast.error("Error loading booked seats.");
+    }
+  };
 
   useEffect(() => {
     const fetchShowDetails = async () => {
@@ -105,19 +139,26 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
 
             setSelectedDate(date || selectedShow.dates[0]);
 
-            const bookingResponse = await axios.get(
-              `${backendUrl}/api/bookings?showId=${params.id}&theatreId=${theatreId}&date=${date}&showtimeId=${showtimeId}`,
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            );
+            // const bookingResponse = await axios.get(
+            //   `${backendUrl}/api/booking/list?showId=${params.id}&theatreId=${theatreId}&date=${date}&showtimeId=${showtimeId}`,
+            //   {
+            //     headers: {
+            //       Authorization: `Bearer ${token}`,
+            //     },
+            //   }
+            // );
+            
+            // setBookedSeats(
+            //   bookingResponse.data.data.flatMap(
+            //     (booking: any) => booking.bookedSeats
+            //   )
+            // );
 
-            setBookedSeats(
-              bookingResponse.data.data.flatMap(
-                (booking: any) => booking.bookedSeats
-              )
+            await fetchBookedSeats(
+              selectedShow.movie.title,
+              selectedTheatre?.name || selectedShow.theatres[0].name,
+              date || selectedShow.dates[0],
+              selectedShowtime?.time || selectedShow.showtimes[0].time
             );
           } else {
             toast.error("Show not found.");
@@ -146,7 +187,10 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
   }, []);
 
   const handleSeatClick = (seatNumber: string) => {
-    if (bookedSeats.includes(seatNumber)) return;
+    if (bookedSeats.includes(seatNumber)) {
+      toast.error("This seat is already booked.");
+      return;
+    }
 
     setSelectedSeats((prevSelectedSeats) =>
       prevSelectedSeats.includes(seatNumber)
@@ -162,6 +206,12 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
       return;
     }
 
+    const invalidSeats = selectedSeats.filter((seat) => bookedSeats.includes(seat));
+  if (invalidSeats.length > 0) {
+    toast.error("One or more selected seats are already booked.");
+    return; // Prevent payment initiation if any seat is already booked
+  }
+
     if (selectedSeats.length === 0) {
       toast.error("Please select at least one seat.");
       return;
@@ -173,7 +223,7 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
     }
 
     try {
-      const userId = localStorage.getItem("userId");
+      const userId = sessionStorage.getItem("userId");
 
       const bookingData = {
         movieName: show?.movie.title,
@@ -241,7 +291,7 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
 
       if (data.success) {
         toast.success("Payment successful. Booking confirmed.");
-        router.push("/");
+        router.push("/user-dashboard");
       }
     } catch (error) {
       console.error("Error confirming payment:", error);
@@ -255,14 +305,18 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
     router.push("/");
   };
 
-  const totalPrice = selectedSeats.length * SEAT_PRICE;
+  // Calculate total price based on selected seats and their tiers
+  const totalRows = Math.ceil(selectedTheatre?.capacity! / 10);
+  const totalPrice = selectedSeats.reduce((total, seat) => {
+    const rowIndex = parseInt(seat.split("S")[0].substring(1)) - 1; // Extract row index from seat number
+    return total + seatPriceByTier(rowIndex, totalRows);
+  }, 0);
 
   if (!show || !selectedTheatre || !selectedShowtime || !selectedDate) {
     return <p>Loading...</p>;
   }
 
   const seatsPerRow = 10;
-  const totalRows = Math.ceil(selectedTheatre.capacity / seatsPerRow);
 
   return (
     <div className={styles.container}>
@@ -281,27 +335,40 @@ const SeatBookingPage: React.FC<SeatBookingPageProps> = ({ params }) => {
       </div>
 
       <div className={styles.seatMap}>
-        {[...Array(totalRows)].map((_, rowIndex) => (
-          <div key={rowIndex} className={styles.row}>
-            {[...Array(seatsPerRow)].map((_, seatIndex) => {
-              const seatNumber = `R${rowIndex + 1}S${seatIndex + 1}`;
-              const isBooked = bookedSeats.includes(seatNumber);
-              return (
-                <div
-                  key={seatNumber}
-                  className={`${styles.seat} ${
-                    selectedSeats.includes(seatNumber)
-                      ? styles.seatSelected
-                      : ""
-                  } ${isBooked ? styles.seatBooked : ""}`}
-                  onClick={() => !isBooked && handleSeatClick(seatNumber)}
-                >
-                  {seatNumber}
-                </div>
-              );
-            })}
-          </div>
-        ))}
+        {[...Array(totalRows)].map((_, rowIndex) => {
+          const rowPrice = seatPriceByTier(rowIndex, totalRows);
+          const previousRowPrice =
+            rowIndex > 0 ? seatPriceByTier(rowIndex - 1, totalRows) : null;
+
+          return (
+            <div key={rowIndex} className={styles.rowContainer}>
+              {/* Display the row price only if it changes */}
+              {rowPrice !== previousRowPrice && (
+                <div className={styles.rowPrice}>₹{rowPrice}</div>
+              )}
+              <div className={styles.row}>
+                {[...Array(seatsPerRow)].map((_, seatIndex) => {
+                  const seatNumber = `R${rowIndex + 1}S${seatIndex + 1}`;
+                  const isBooked = bookedSeats.includes(seatNumber);
+                  return (
+                    <div
+                      key={seatNumber}
+                      className={`${styles.seat} ${
+                        selectedSeats.includes(seatNumber)
+                          ? styles.seatSelected
+                          : ""
+                      } ${isBooked ? styles.seatBooked : ""}`}
+                      onClick={() => !isBooked && handleSeatClick(seatNumber)}
+                      title={`Price: ₹${rowPrice}`}
+                    >
+                      {seatNumber}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       <div className={styles.totalPriceContainer}>

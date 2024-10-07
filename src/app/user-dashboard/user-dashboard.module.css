@@ -1,0 +1,54 @@
+/* Main container for the dashboard */
+.bookingList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  /* Individual booking item styled as a card */
+  .bookingItem {
+    background-color: #f8f9fa; /* Light background */
+    border: 1px solid #e0e0e0; /* Subtle border */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Slight shadow for elevation */
+    padding: 20px;
+    width: 300px; /* Fixed width for card */
+    text-align: center;
+    transition: transform 0.2s ease-in-out; /* Smooth scaling effect */
+  }
+  
+  /* Hover effect for each booking card */
+  .bookingItem:hover {
+    transform: scale(1.05); /* Slight scaling on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+  }
+  
+  /* Booking title (movie name) styling */
+  .bookingItem h3 {
+    font-size: 1.5em;
+    color: #343a40; /* Darker color for movie title */
+    margin-bottom: 10px;
+  }
+  
+  /* Other booking details styling */
+  .bookingItem p {
+    font-size: 1em;
+    color: #6c757d; /* Subtle text color */
+    margin: 5px 0;
+  }
+  
+  /* Different font weight for labels */
+  .bookingItem p span {
+    font-weight: bold;
+    color: #495057;
+  }
+  
+  /* Media query for responsiveness */
+  @media (max-width: 768px) {
+    .bookingItem {
+      width: 90%; /* Cards take full width on smaller screens */
+    }
+  }
+  

@@ -32,6 +32,20 @@
   padding-bottom: 1rem; /* Ensure last row is not cut off */
 }
 
+/* Row container styling (holds both row price and row seats) */
+.rowContainer {
+  margin-bottom: 2rem; /* Increase space between rows */
+  text-align: center;
+}
+
+/* Row price label styling */
+.rowPrice {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
 /* Seat row styling */
 .row {
   display: flex;
@@ -52,8 +66,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  cursor: default; /* Change cursor to default instead of pointer */
   transition: background-color 0.3s, transform 0.3s;
+  pointer-events: auto; /* Allow interaction on selectable seats */
 }
 
 /* Seat hover effect */
