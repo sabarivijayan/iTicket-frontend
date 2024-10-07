@@ -142,8 +142,20 @@
     text-align: left;
     transition: background-color 0.3s ease;
 }
-
+.dashboardButton{
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: transparent;
+    color: #000;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.3s ease;
+}
 .logoutButton:hover {
+    background-color: #fff4f2;
+}
+.dashboardButton:hover {
     background-color: #fff4f2;
 }
 

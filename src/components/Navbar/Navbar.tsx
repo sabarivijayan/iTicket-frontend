@@ -68,6 +68,10 @@ export default function Navbar() {
     router.push('/'); // Redirect to the home page
   };
 
+  const handleDashboardClick = () => {
+    router.push('/user-dashboard'); // Redirect to the user dashboard page
+  };
+
   const handleMovieClick = (movieId: string) => {
     router.push(`/movies/${movieId}`); // Redirect to movie detail page
   };
@@ -146,6 +150,9 @@ export default function Navbar() {
             </div>
             {showDropdown && (
               <div className={styles.dropdownMenu}>
+                <button className={styles.dashboardButton} onClick={handleDashboardClick}>
+                  Dashboard
+                </button>
                 <button className={styles.logoutButton} onClick={handleLogout}>
                   Logout
                 </button>
